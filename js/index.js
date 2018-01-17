@@ -1,15 +1,24 @@
 //THREEJS RELATED VARIABLES 
 var CONFIG = {
+
+  floorColor: 0x7abf8e, // 地板颜色
+  fogColor: 0xd6eae6, // 迷雾颜色
+
+  fieldOfView: 50, // 视野大小
+
   treeNumber: 30, // 背景树的数量
   minTreeHeight: 10, // 树的最低高度
   maxTreeHeight: 250, // 树的最高高度
+  treeTopWidth: 1, // 树顶宽度
+  treeBottomWidth: 5, // 树底宽度
+
   speedUpLevel: 2, // 加速大小
   levelUpdateFreq: 3000 // 加速频率
 }
 
 
 var scene,
-  camera, fieldOfView, aspectRatio, nearPlane, farPlane,
+  camera, aspectRatio, nearPlane, farPlane,
   shadowLight,
   renderer,
   container,
@@ -91,8 +100,16 @@ var skinMat = new THREE.MeshPhongMaterial({
 
 //INIT THREE JS, SCREEN AND MOUSE EVENTS
 
-function initScreenAnd3D() {
+// 开始游戏，重新开始
+function handleMouseDown(event) {
+  if (gameStatus == "play") hero.jump();
+  else if (gameStatus == "readyToReplay") {
+    replay();
+  }
+}
 
+// 初始化整个游戏视角
+function initScreenAnd3D() {
   HEIGHT = window.innerHeight;
   WIDTH = window.innerWidth;
   windowHalfX = WIDTH / 2;
@@ -100,14 +117,13 @@ function initScreenAnd3D() {
 
   scene = new THREE.Scene();
 
-  scene.fog = new THREE.Fog(0xd6eae6, 160, 350);
+  scene.fog = new THREE.Fog(CONFIG.fogColor, 160, 350); // 迷雾
 
   aspectRatio = WIDTH / HEIGHT;
-  fieldOfView = 50;
   nearPlane = 1;
   farPlane = 2000;
   camera = new THREE.PerspectiveCamera(
-    fieldOfView,
+    CONFIG.fieldOfView,
     aspectRatio,
     nearPlane,
     farPlane
@@ -147,17 +163,8 @@ function handleWindowResize() {
   camera.updateProjectionMatrix();
 }
 
-
-function handleMouseDown(event) {
-  if (gameStatus == "play") hero.jump();
-  else if (gameStatus == "readyToReplay") {
-    replay();
-  }
-}
-
 function createLights() {
   globalLight = new THREE.AmbientLight(0xffffff, .9);
-
   shadowLight = new THREE.DirectionalLight(0xffffff, 1);
   shadowLight.position.set(-30, 40, 20);
   shadowLight.castShadow = true;
@@ -166,22 +173,20 @@ function createLights() {
   shadowLight.shadow.camera.top = 400;
   shadowLight.shadow.camera.bottom = -400;
   shadowLight.shadow.camera.near = 1;
-  shadowLight.shadow.camera.far = 2000;
+  shadowLight.shadow.camera.far = 1000;
   shadowLight.shadow.mapSize.width = shadowLight.shadow.mapSize.height = 2048;
-
   scene.add(globalLight);
   scene.add(shadowLight);
-
 }
 
 // 地板
 function createFloor() {
   floorShadow = new THREE.Mesh(new THREE.SphereGeometry(floorRadius, 50, 50), new THREE.MeshPhongMaterial({
-    color: 0x7abf8e,
+    color: CONFIG.floorColor,
     specular: 0x000000,
     shininess: 1,
     transparent: true,
-    opacity: .8
+    opacity: .7
   }));
   floorShadow.receiveShadow = true;
 
@@ -196,7 +201,6 @@ function createFloor() {
   floor.add(floorShadow);
   floor.add(floorGrass);
   scene.add(floor);
-
 }
 
 // 兔子
@@ -1296,7 +1300,6 @@ function resetGame() {
 function initUI() {
   fieldDistance = document.getElementById("distValue");
   fieldGameOver = document.getElementById("gameoverInstructions");
-
 }
 
 
@@ -1312,11 +1315,10 @@ Tree = function () {
   this.mesh.add(this.trunc.mesh);
 }
 
-
 Trunc = function () {
   var truncHeight = CONFIG.minTreeHeight + Math.random() * CONFIG.maxTreeHeight;
-  var topRadius = 1 + Math.random() * 5;
-  var bottomRadius = 5 + Math.random() * 5;
+  var topRadius = CONFIG.treeTopWidth + Math.random() * 5;
+  var bottomRadius = CONFIG.treeBottomWidth + Math.random() * 5;
   var mats = [blackMat, brownMat, pinkMat, whiteMat, greenMat, lightBrownMat, pinkMat];
   var matTrunc = blackMat;//mats[Math.floor(Math.random()*mats.length)];
   var nhSegments = 3;//Math.ceil(2 + Math.random()*6);
@@ -1336,7 +1338,6 @@ Trunc = function () {
     geom.computeVertexNormals();
 
     // FRUITS
-
     if (Math.random() > .7) {
       var size = Math.random() * 3;
       var fruitGeometry = new THREE.CubeGeometry(size, size, size, 1);
@@ -1352,7 +1353,6 @@ Trunc = function () {
     }
 
     // BRANCHES
-
     if (Math.random() > .5 && v.y > 10 && v.y < truncHeight - 10) {
       var h = 3 + Math.random() * 5;
       var thickness = .2 + Math.random();
@@ -1369,7 +1369,6 @@ Trunc = function () {
       branch.quaternion.setFromUnitVectors(axis, vec.clone().normalize());
       this.mesh.add(branch);
     }
-
   }
 
   this.mesh.castShadow = true;
