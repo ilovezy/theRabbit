@@ -1262,7 +1262,7 @@ function init(event){
   resetGame();
   loop();
   
-  //setInterval(hero.blink.bind(hero), 3000);
+  // setInterval(hero.blink.bind(hero), 3000);
 }
 
 function resetGame(){
