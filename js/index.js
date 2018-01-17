@@ -16,6 +16,9 @@ var CONFIG = {
   speedUpLevel: 2, // 加速大小
   levelUpdateFreq: 3000, // 加速频率
   flyingTime: 15, // 兔子飞行时间 10-20之间为好
+
+  antialias: true, // 抗锯齿 开启会卡
+  bgmUrl: 'Antonio-Vivaldi-Summer_01.mp3',
 }
 
 var scene,
@@ -43,7 +46,7 @@ var cameraPosGameOver = 260; // 游戏结束时的视角距离
 var monsterAcceleration = 0.004; // 怪物的加速度
 var malusClearColor = 0xb44b39;
 var malusClearAlpha = 0;
-var audio = new Audio('Antonio-Vivaldi-Summer_01.mp3');
+var audio = new Audio(CONFIG.bgmUrl);
 
 var fieldGameOver, fieldDistance;
 
@@ -93,12 +96,6 @@ var whiteMat = new THREE.MeshPhongMaterial({
   shading: THREE.FlatShading,
 });
 
-var skinMat = new THREE.MeshPhongMaterial({
-  color: 0xff9ea5,
-  shading: THREE.FlatShading
-});
-
-
 //INIT THREE JS, SCREEN AND MOUSE EVENTS
 
 // 开始游戏，重新开始
@@ -135,8 +132,8 @@ function initScreenAnd3D() {
   camera.lookAt(new THREE.Vector3(0, 30, 0));
 
   renderer = new THREE.WebGLRenderer({
-    alpha: true,
-    antialias: true
+    alpha: true, // alpha通道
+    antialias: CONFIG.antialias || false // 抗锯齿
   });
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setClearColor(malusClearColor, malusClearAlpha);
