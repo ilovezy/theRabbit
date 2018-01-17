@@ -4,7 +4,7 @@ var CONFIG = {
   floorColor: 0x7abf8e, // 地板颜色
   fogColor: 0xd6eae6, // 迷雾颜色
 
-  fieldOfView: 50, // 视野大小
+  fieldOfView: 80, // 视野大小
 
   treeNumber: 30, // 背景树的数量
   minTreeHeight: 10, // 树的最低高度
@@ -13,7 +13,8 @@ var CONFIG = {
   treeBottomWidth: 5, // 树底宽度
 
   speedUpLevel: 2, // 加速大小
-  levelUpdateFreq: 3000 // 加速频率
+  levelUpdateFreq: 3000, // 加速频率
+  flyingTime: 15, // 兔子飞行时间 10-20之间为好
 }
 
 
@@ -211,14 +212,15 @@ Hero = function () {
   this.body = new THREE.Group();
   this.mesh.add(this.body);
 
+  // 躯干
   var torsoGeom = new THREE.CubeGeometry(7, 7, 10, 1);
-
   this.torso = new THREE.Mesh(torsoGeom, brownMat);
   this.torso.position.z = 0;
   this.torso.position.y = 7;
   this.torso.castShadow = true;
   this.body.add(this.torso);
 
+  // 内裤
   var pantsGeom = new THREE.CubeGeometry(9, 9, 5, 1);
   this.pants = new THREE.Mesh(pantsGeom, whiteMat);
   this.pants.position.z = -3;
@@ -226,6 +228,7 @@ Hero = function () {
   this.pants.castShadow = true;
   this.torso.add(this.pants);
 
+  // 尾巴
   var tailGeom = new THREE.CubeGeometry(3, 3, 3, 1);
   tailGeom.applyMatrix(new THREE.Matrix4().makeTranslation(0, 0, -2));
   this.tail = new THREE.Mesh(tailGeom, lightBrownMat);
@@ -236,8 +239,8 @@ Hero = function () {
 
   this.torso.rotation.x = -PI / 8;
 
+  // 头
   var headGeom = new THREE.CubeGeometry(10, 10, 13, 1);
-
   headGeom.applyMatrix(new THREE.Matrix4().makeTranslation(0, 0, 7.5));
   this.head = new THREE.Mesh(headGeom, brownMat);
   this.head.position.z = 2;
@@ -245,6 +248,7 @@ Hero = function () {
   this.head.castShadow = true;
   this.body.add(this.head);
 
+  // 脸颊
   var cheekGeom = new THREE.CubeGeometry(1, 4, 4, 1);
   this.cheekR = new THREE.Mesh(cheekGeom, pinkMat);
   this.cheekR.position.x = -5;
@@ -257,7 +261,7 @@ Hero = function () {
   this.cheekL.position.x = -this.cheekR.position.x;
   this.head.add(this.cheekL);
 
-
+  // 鼻子
   var noseGeom = new THREE.CubeGeometry(6, 6, 3, 1);
   this.nose = new THREE.Mesh(noseGeom, lightBrownMat);
   this.nose.position.z = 13.5;
@@ -265,6 +269,7 @@ Hero = function () {
   this.nose.castShadow = true;
   this.head.add(this.nose);
 
+  // 嘴
   var mouthGeom = new THREE.CubeGeometry(4, 2, 4, 1);
   mouthGeom.applyMatrix(new THREE.Matrix4().makeTranslation(0, 0, 3));
   mouthGeom.applyMatrix(new THREE.Matrix4().makeRotationX(PI / 12));
@@ -274,7 +279,7 @@ Hero = function () {
   this.mouth.castShadow = true;
   this.head.add(this.mouth);
 
-
+  // 爪子
   var pawFGeom = new THREE.CubeGeometry(3, 3, 3, 1);
   this.pawFR = new THREE.Mesh(pawFGeom, lightBrownMat);
   this.pawFR.position.x = -2;
@@ -301,16 +306,14 @@ Hero = function () {
   this.pawBR.castShadow = true;
   this.body.add(this.pawBR);
 
+  // 耳朵
   var earGeom = new THREE.CubeGeometry(7, 18, 2, 1);
   earGeom.vertices[6].x += 2;
   earGeom.vertices[6].z += .5;
-
   earGeom.vertices[7].x += 2;
   earGeom.vertices[7].z -= .5;
-
   earGeom.vertices[2].x -= 2;
   earGeom.vertices[2].z -= .5;
-
   earGeom.vertices[3].x -= 2;
   earGeom.vertices[3].z += .5;
   earGeom.applyMatrix(new THREE.Matrix4().makeTranslation(0, 9, 0));
@@ -338,8 +341,8 @@ Hero = function () {
   this.eyeL.castShadow = true;
   this.head.add(this.eyeL);
 
+  // 虹膜（眼珠子）
   var irisGeom = new THREE.CubeGeometry(.6, 2, 2);
-
   this.iris = new THREE.Mesh(irisGeom, blackMat);
   this.iris.position.x = 1.2;
   this.iris.position.y = 1;
@@ -348,7 +351,6 @@ Hero = function () {
 
   this.eyeR = this.eyeL.clone();
   this.eyeR.children[0].position.x = -this.iris.position.x;
-
 
   this.eyeR.position.x = -this.eyeL.position.x;
   this.head.add(this.eyeR);
@@ -422,7 +424,6 @@ Hero.prototype.run = function () {
   var disp = .2;
 
   // BODY
-
   this.body.position.y = 6 + Math.sin(t - PI / 2) * amp;
   this.body.rotation.x = .2 + Math.sin(t - PI / 2) * amp * .1;
 
@@ -481,7 +482,7 @@ Hero.prototype.jump = function () {
   if (this.status == "jumping") return;
   this.status = "jumping";
   var _this = this;
-  var totalSpeed = 10 / speed;
+  var totalSpeed = CONFIG.flyingTime / speed; // 浮空时间
   var jumpHeight = 45;
 
   TweenMax.to(this.earL.rotation, totalSpeed, {x: "+=.3", ease: Back.easeOut});
@@ -502,7 +503,6 @@ Hero.prototype.jump = function () {
       _this.status = "running";
     }
   });
-
 }
 
 // 狼
@@ -591,12 +591,10 @@ Monster = function () {
   this.iris.position.y = -1;
   this.iris.position.z = 1;
   this.eyeL.add(this.iris);
-
   this.eyeR = this.eyeL.clone();
   this.eyeR.children[0].position.x = -this.iris.position.x;
   this.eyeR.position.x = -this.eyeL.position.x;
   this.head.add(this.eyeR);
-
 
   var earGeom = new THREE.CubeGeometry(8, 6, 2, 1);
   earGeom.vertices[1].x -= 4;
@@ -605,8 +603,6 @@ Monster = function () {
   earGeom.vertices[5].z -= 2;
   earGeom.vertices[0].x -= 4;
   earGeom.vertices[0].z -= 2;
-
-
   earGeom.applyMatrix(new THREE.Matrix4().makeTranslation(0, 3, 0));
 
   this.earL = new THREE.Mesh(earGeom, blackMat);
@@ -632,7 +628,6 @@ Monster = function () {
   this.tail.position.z = -10;
   this.tail.position.y = 4;
   this.torso.add(this.tail);
-
 
   var pawGeom = new THREE.CylinderGeometry(1.5, 0, 10);
   pawGeom.applyMatrix(new THREE.Matrix4().makeTranslation(0, -5, 0));
@@ -694,7 +689,6 @@ Monster.prototype.run = function () {
   this.torso.rotation.x = Math.sin(t) * PI / 8;
   this.torso.position.y = 3 - Math.sin(t + PI / 2) * 3;
 
-  //this.head.position.y = 5-Math.sin(t+PI/2)*2;
   this.head.rotation.x = -.1 + Math.sin(-t - 1) * .4;
   this.mouth.rotation.x = .2 + Math.sin(t + PI + .3) * .4;
 
@@ -1192,7 +1186,7 @@ function getBonus() {
   bonusParticles.mesh.visible = true;
   bonusParticles.explose();
   carrot.angle += PI / 2;
-  monsterPosTarget += .025;
+  monsterPosTarget += .025; // 每次吃到奖励前进多少米
 }
 
 function getMalus() {
@@ -1204,16 +1198,14 @@ function getMalus() {
       obstacle.status = "ready";
       obstacle.body.rotation.y = Math.random() * PI * 2;
       obstacle.angle = -floorRotation - Math.random() * .4;
-
       obstacle.angle = obstacle.angle % (PI * 2);
       obstacle.mesh.rotation.x = 0;
       obstacle.mesh.rotation.y = 0;
       obstacle.mesh.rotation.z = 0;
       obstacle.mesh.position.z = 0;
-
     }
   });
-  //
+
   monsterPosTarget -= .04;
   TweenMax.from(this, .5, {
     malusClearAlpha: .5, onUpdate: function () {
