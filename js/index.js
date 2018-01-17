@@ -77,10 +77,12 @@ var lightBrownMat = new THREE.MeshPhongMaterial({
   shading: THREE.FlatShading,
 });
 
+// 一些基本几何形的颜色
 var whiteMat = new THREE.MeshPhongMaterial({
   color: 0xa49789,
   shading: THREE.FlatShading,
 });
+
 var skinMat = new THREE.MeshPhongMaterial({
   color: 0xff9ea5,
   shading: THREE.FlatShading
@@ -172,22 +174,20 @@ function createLights() {
 
 }
 
+// 地板
 function createFloor() {
-
   floorShadow = new THREE.Mesh(new THREE.SphereGeometry(floorRadius, 50, 50), new THREE.MeshPhongMaterial({
     color: 0x7abf8e,
     specular: 0x000000,
     shininess: 1,
     transparent: true,
-    opacity: .5
+    opacity: .8
   }));
-  //floorShadow.rotation.x = -PI / 2;
   floorShadow.receiveShadow = true;
 
   floorGrass = new THREE.Mesh(new THREE.SphereGeometry(floorRadius - .5, 50, 50), new THREE.MeshBasicMaterial({
     color: 0x7abf8e
   }));
-  //floor.rotation.x = -PI / 2;
   floorGrass.receiveShadow = false;
 
   floor = new THREE.Group();
@@ -199,6 +199,7 @@ function createFloor() {
 
 }
 
+// 兔子
 Hero = function () {
   this.status = "running";
   this.runningCycle = 0;
@@ -356,6 +357,7 @@ Hero = function () {
   });
 }
 
+// 萝卜
 BonusParticles = function () {
   this.mesh = new THREE.Group();
   var bigParticleGeom = new THREE.CubeGeometry(10, 10, 10, 1);
@@ -372,6 +374,7 @@ BonusParticles = function () {
   }
 }
 
+// 萝卜爆炸效果
 BonusParticles.prototype.explose = function () {
   var _this = this;
   var explosionSpeed = .5;
@@ -396,10 +399,12 @@ BonusParticles.prototype.explose = function () {
   }
 }
 
+// 移除障碍物
 function removeParticle(p) {
   p.visible = false;
 }
 
+// 兔子开跑
 Hero.prototype.run = function () {
   this.status = "running";
 
@@ -464,12 +469,10 @@ Hero.prototype.run = function () {
   this.pawBL.position.y = 1.5 + Math.sin(PI + t) * amp;
   this.pawBL.rotation.x = Math.cos(t + PI * 1.5) * PI / 3;
 
-
   this.pawBL.position.z = -Math.cos(PI + t) * amp;
-
-
 }
 
+// 跳跃
 Hero.prototype.jump = function () {
   if (this.status == "jumping") return;
   this.status = "jumping";
@@ -492,16 +495,14 @@ Hero.prototype.jump = function () {
   TweenMax.to(this.mesh.position, totalSpeed / 2, {y: jumpHeight, ease: Power2.easeOut});
   TweenMax.to(this.mesh.position, totalSpeed / 2, {
     y: 0, ease: Power4.easeIn, delay: totalSpeed / 2, onComplete: function () {
-      //t = 0;
       _this.status = "running";
     }
   });
 
 }
 
-
+// 狼
 Monster = function () {
-
   this.runningCycle = 0;
 
   this.mesh = new THREE.Group();
@@ -663,6 +664,7 @@ Monster = function () {
   this.body.rotation.y = PI / 2;
 }
 
+// 狼跑步
 Monster.prototype.run = function () {
   var s = Math.min(speed, maxSpeed);
   this.runningCycle += delta * s * .7;
@@ -697,6 +699,7 @@ Monster.prototype.run = function () {
   this.eyeR.scale.y = .5 + Math.sin(t + PI) * .5;
 }
 
+// 兔子摇头效果
 Hero.prototype.nod = function () {
   var _this = this;
   var sp = .5 + Math.random();
@@ -771,6 +774,7 @@ Hero.prototype.nod = function () {
 
 }
 
+// 兔子被咬死
 Hero.prototype.hang = function () {
   var _this = this;
   var sp = 1;
@@ -804,6 +808,7 @@ Hero.prototype.hang = function () {
   TweenMax.to(this.eyeR.scale, sp, {y: 1, ease: ease});
 }
 
+// 狼摇头
 Monster.prototype.nod = function () {
   var _this = this;
   var sp = 1 + Math.random() * 2;
@@ -827,6 +832,7 @@ Monster.prototype.nod = function () {
   TweenMax.to([this.eyeR.scale, this.eyeL.scale], sp / 20, {y: 0, ease: Power1.easeInOut, yoyo: true, repeat: 1});
 }
 
+// 狼坐下来
 Monster.prototype.sit = function () {
   var sp = 1.2;
   var ease = Power4.easeOut;
@@ -853,7 +859,7 @@ Monster.prototype.sit = function () {
 
 }
 
-
+// 胡萝卜
 Carrot = function () {
   this.angle = 0;
   this.mesh = new THREE.Group();
@@ -894,6 +900,7 @@ Carrot = function () {
   });
 }
 
+// 刺猬
 Hedgehog = function () {
   this.angle = 0;
   this.status = "ready";
@@ -1000,6 +1007,7 @@ Hedgehog = function () {
   });
 }
 
+// 刺猬摇晃效果
 Hedgehog.prototype.nod = function () {
   var _this = this;
   var speed = .1 + Math.random() * .5;
@@ -1020,12 +1028,10 @@ function createHero() {
 }
 
 function createMonster() {
-
   monster = new Monster();
   monster.mesh.position.z = 20;
   scene.add(monster.mesh);
   updateMonsterPosition();
-
 }
 
 function updateMonsterPosition() {
@@ -1056,9 +1062,7 @@ function gameOver() {
 }
 
 function replay() {
-
   gameStatus = "preparingToReplay"
-
   fieldGameOver.className = "";
 
   TweenMax.killTweensOf(monster.pawFL.position);
@@ -1096,7 +1100,6 @@ function replay() {
       resetGame();
     }
   });
-
 }
 
 function createFirs() {
@@ -1143,7 +1146,6 @@ function updateObstaclePosition() {
   obstacle.mesh.rotation.z = floorRotation + obstacle.angle - PI / 2;
   obstacle.mesh.position.y = -floorRadius + Math.sin(floorRotation + obstacle.angle) * (floorRadius + 3);
   obstacle.mesh.position.x = Math.cos(floorRotation + obstacle.angle) * (floorRadius + 3);
-
 }
 
 function updateFloorRotation() {
@@ -1165,10 +1167,9 @@ function createBonusParticles() {
   bonusParticles = new BonusParticles();
   bonusParticles.mesh.visible = false;
   scene.add(bonusParticles.mesh);
-
 }
 
-
+// 检测碰撞
 function checkCollision() {
   var db = hero.mesh.position.clone().sub(carrot.mesh.position.clone());
   var dm = hero.mesh.position.clone().sub(obstacle.mesh.position.clone());
@@ -1187,9 +1188,7 @@ function getBonus() {
   bonusParticles.mesh.visible = true;
   bonusParticles.explose();
   carrot.angle += PI / 2;
-  //speed*=.95;
   monsterPosTarget += .025;
-
 }
 
 function getMalus() {
