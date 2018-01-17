@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0a217745-af20-48ae-a550-948abac8eca6" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/js/index.js" afterPath="$PROJECT_DIR$/js/index.js" />
-      <change beforePath="$PROJECT_DIR$/scss/style.scss" afterPath="" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -17,21 +14,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" column="44" lean-forward="true" selection-start-line="6" selection-start-column="44" selection-end-line="6" selection-end-column="44" />
+            <state relative-caret-position="85">
+              <caret line="5" column="48" lean-forward="true" selection-start-line="5" selection-start-column="48" selection-end-line="5" selection-end-column="48" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="91">
-              <caret line="1309" column="0" lean-forward="true" selection-start-line="1309" selection-start-column="0" selection-end-line="1309" selection-end-column="0" />
+            <state relative-caret-position="224">
+              <caret line="80" column="17" lean-forward="false" selection-start-line="80" selection-start-column="9" selection-end-line="80" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -51,12 +48,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
+      <find>controls</find>
+      <find>mousePos</find>
+      <find>firs</find>
+      <find>Fir</find>
+      <find>createFirs</find>
+      <find>initUI</find>
+      <find>fieldDistance</find>
       <find>fieldGameOver</find>
-      <find>dist</find>
-      <find>Anto</find>
-      <find>audio</find>
-      <find>gameoverInstructions</find>
-      <find>gameStatus</find>
+      <find>100</find>
+      <find>MaxTreeHeight</find>
+      <find>minTreeHeight</find>
+      <find>maxSpeed</find>
+      <find>speedUpLevel</find>
+      <find>updateLevel</find>
+      <find>levelUpdateFreq</find>
+      <find>initSpeed</find>
+      <find>speed</find>
+      <find>levelInterval</find>
+      <find>cameraPosGame</find>
+      <find>monsterAcceleration</find>
+      <find>malusClearAlpha</find>
+      <find>malusClearColor</find>
+      <find>collisionBonus</find>
+      <find>collisionObstacle</find>
+      <find>Math.PI</find>
+      <find>PI</find>
+      <find>removeParticle</find>
+      <find>0xd6eae6</find>
+      <find>skinMat</find>
+      <find>whiteMat</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -254,12 +275,12 @@
       <updated>1516173656062</updated>
       <workItem from="1516173658161" duration="533000" />
       <workItem from="1516175934644" duration="1141000" />
-      <workItem from="1516177702390" duration="33000" />
+      <workItem from="1516177702390" duration="1439000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1707000" />
+    <option name="totallyTimeSpent" value="3113000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="709" extended-state="0" />
@@ -284,7 +305,7 @@
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32899022" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.69543976" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21243942" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Android WiFi ADB" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -384,18 +405,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/index.js">
+    <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="91">
-          <caret line="1309" column="0" lean-forward="true" selection-start-line="1309" selection-start-column="0" selection-end-line="1309" selection-end-column="0" />
+        <state relative-caret-position="85">
+          <caret line="5" column="48" lean-forward="true" selection-start-line="5" selection-start-column="48" selection-end-line="5" selection-end-column="48" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
+    <entry file="file://$PROJECT_DIR$/js/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="44" lean-forward="true" selection-start-line="6" selection-start-column="44" selection-end-line="6" selection-end-column="44" />
+        <state relative-caret-position="224">
+          <caret line="80" column="17" lean-forward="false" selection-start-line="80" selection-start-column="9" selection-end-line="80" selection-end-column="17" />
           <folding />
         </state>
       </provider>
